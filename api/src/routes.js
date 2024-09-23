@@ -1,10 +1,10 @@
 const { Router } = require("express");
-const ContactController = require("./app/controllers/ContactController");
+const MessageController = require("./app/controllers/MessageController");
 
 const router = Router();
 
-router.get("/message", ContactController.index);
-router.get("/message/:id", ContactController.show);
-router.post("/message/", ContactController.sendBotMessage);
+router.get("/message", MessageController.index);
+router.get("/message/:id", MessageController.show);
+router.post("/message/", MessageController.sendBotMessage);
 
 module.exports = router;
