@@ -37,11 +37,11 @@ jobs:
           cd api
       - name: Transferir o projeto para o servidor
         uses: easingthemes/ssh-deploy@v2.1.4
-        with:
+        env:
+					SCRIPT_AFTER_REQUIRED: true
           SCRIPT_AFTER: |
             npm i
             npm run start:prod
-        env:
           SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_KEY }}
           REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
           REMOTE_USER: ${{ secrets.DEPLOY_USER }}
