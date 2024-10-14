@@ -36,7 +36,7 @@ jobs:
       - run: |
           cd api
       - name: Transferir o projeto para o servidor
-        uses: easingthemes/ssh-deploy@v2.1.4
+        uses: easingthemes/ssh-deploy@v5.1.0
         env:
 					SCRIPT_AFTER_REQUIRED: true
           SCRIPT_AFTER: |
