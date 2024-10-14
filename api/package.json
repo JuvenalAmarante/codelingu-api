@@ -4,7 +4,8 @@
   "description": "API for CodeLigu project",
   "main": "index.js",
   "scripts": {
-    "start:dev": "nodemon src/index.js"
+    "start:dev": "nodemon src/index.js",
+    "start:prod": "pm2 start src/index.js"
   },
   "keywords": [],
   "author": "",
