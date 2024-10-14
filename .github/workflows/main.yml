@@ -15,7 +15,7 @@ jobs:
     - run: |
           cd web
           npm install
-    - run: CI=false npm run build
+          CI=false npm run build
     - name: Transferir o build para o servdor
       uses: easingthemes/ssh-deploy@v2.1.4
       env: 
@@ -23,5 +23,5 @@ jobs:
         REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
         REMOTE_USER: ${{ secrets.DEPLOY_USER }}
         REMOTE_PORT: ${{ secrets.DEPLOY_PORT }}
-        SOURCE: "build/"
+        SOURCE: "web/dist/"
         TARGET: ${{ secrets.DEPLOY_TARGET }}
