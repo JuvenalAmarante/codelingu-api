@@ -14,48 +14,56 @@ import {
   Typography,
   Box,
   Avatar,
-  Input,
 } from "@mui/material";
 import SendIcon from "@mui/icons-material/Send";
-import PersonIcon from "@mui/icons-material/Person";
-import BotIcon from "@mui/icons-material/SmartToy";
+import Loader from "./Loader.jsx";
 import FloatingButton from "./Floating";
 import { MessageOutlined } from "@mui/icons-material";
-import Loader from "./Loader.jsx";
 
 const ChatBot = () => {
   const messagesEnd = useRef();
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState([
+    { id: 1, text: "Olá, sou Lingu, a IA do CodeLingu. Escolha uma opção:", sender: "bot" }
+  ]);
   const [input, setInput] = useState("");
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSendMessage = async () => {
-    setInput("");
+  const handleOptionClick = async (optionText) => {
+    const newMessage = { id: messages.length + 1, text: `Você selecionou: ${optionText}`, sender: "user" };
     
     setIsLoading(true);
+
+    setMessages([...messages, newMessage]);
+
+    const newMessages = [...messages, newMessage];
+    const botReply = {
+      id: messages.length + 2,
+      text: await sendMessage(newMessages.map((msg) => ({ text: msg.text })), optionText),
+      sender: "bot"
+    };
+
+    setMessages([...newMessages, botReply]);
+    setIsLoading(false);
+  };
+
+  const handleSendMessage = async () => {
     if (input.trim() === "") return;
 
-    const userMessage = {
-      text: input,
-      sender: "user",
-    };
-    
+    const userMessage = { id: messages.length + 1, text: input, sender: "user" };
     setMessages([...messages, userMessage]);
 
-    const newMessages = [...messages, userMessage];
-    const botMessage = {
-      text: await sendMessage(
-        messages.map((item) => ({
-          text: item.text,
-        })),
-        input
-      ),
+    setIsLoading(true);
+
+    const botReply = {
+      id: messages.length + 2,
+      text: await sendMessage([...messages, userMessage].map((msg) => ({ text: msg.text })), input),
       sender: "bot",
     };
-    
-    setMessages([...newMessages, botMessage]);
+
+    setMessages([...messages, userMessage, botReply]);
     setIsLoading(false);
+    setInput("");
   };
 
   const handleInputChange = (event) => {
@@ -76,224 +84,66 @@ const ChatBot = () => {
     scrollToBottom();
   }, [messages]);
 
-  const styles = (theme) => ({
-    textField: {
-      width: "90%",
-      marginLeft: "auto",
-      marginRight: "auto",
-      paddingBottom: 0,
-      marginTop: 0,
-      fontWeight: 500,
-    },
-    input: {
-      color: "white",
-    },
-  });
-
   if (!open)
     return (
-      <FloatingButton sx={{ zIndex: 9999 }} onClick={() => setOpen(true)}>
+      <FloatingButton onClick={() => setOpen(true)}>
         <MessageOutlined />
       </FloatingButton>
     );
 
   return (
-    <>
-      <Container
-        component={Paper}
-        sx={{
-          p: 2,
-          mt: 2,
-          width: "35%",
-          height: "450px",
-          backgroundColor: "#09090a",
-          zIndex: 9999,
-          position: "fixed",
-          bottom: "0",
-          right: "12px",
-          overflow: "hidden",
-        }}
-      >
-        <Box
-          sx={{ display: "flex", gap: 1, heigth: "100px", width: "100%" }}
-          justifyContent="space-between"
-          alignItems="center"
-        >
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <MessageOutlined sx={{ color: "white" }} />
+    <Container component={Paper} sx={{ p: 2, mt: 2, width: "35%", height: "450px", backgroundColor: "#09090a", position: "fixed", bottom: "0", right: "12px", overflow: "hidden" }}>
+      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Typography variant="h7" sx={{ color: "white" }}>Conversa</Typography>
+        <IconButton onClick={() => setOpen(false)}>
+          <CloseIcon sx={{ color: "white" }} />
+        </IconButton>
+      </Box>
 
-            <Typography
-              variant="h7"
-              gutterBottom
-              sx={{
-                marginLeft: "15px",
-                textAlign: "center",
-                fontFamily: "Plus Jakarta Sans",
-                color: "white",
-              }}
-            >
-              Conversa
-            </Typography>
-          </Box>
-
-          <IconButton
-            aria-label="voltar"
-            sx={{
-              color: "white",
-              width: "10%",
-              justifyContent: "top",
-              alignItems: "top",
-            }}
-            onClick={() => setOpen(false)}
-          >
-            <CloseIcon />
-          </IconButton>
-        </Box>
-
-        <List sx={{ overflowY: "scroll", mb: 6, height: "250px" }}>
-          <ListItem
-            key={0}
-            sx={{
-              textAlign: "left",
-              width: "100%",
-              justifyContent: "flex-start",
-              alignItems: "start",
-            }}
-          >
-            <ListItemAvatar>
-              <Avatar sx={{ bgcolor: "primary.main" }}>
-                <CodeIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              primary={`Olá, sou Lingu, a IA do CodeLingu. Estou aqui para te ajudar nos seus estudos no CodeLingu.\nTenho todas as informações que estão nas aulas.`}
-              sx={{
-                whiteSpace: "pre-wrap",
-                bgcolor: "#121214",
-                color: "white",
-                borderRadius: 2,
-                p: 2,
-                display: "inline-block",
-                maxWidth: "90%",
-                ml: 0,
-                mr: 2,
-              }}
-            />
-          </ListItem>
-
-          {messages.map((message, index) => (
-            <ListItem
-              key={index}
-              sx={{
-                textAlign: message.sender === "user" ? "right" : "left",
-                width: "100%",
-                justifyContent:
-                  message.sender === "user" ? "flex-end" : "flex-start",
-                alignItems: "start",
-              }}
-            >
-              {message.sender === "bot" && (
-                <ListItemAvatar>
-                  <Avatar sx={{ bgcolor: "primary.main" }}>
-                    <CodeIcon />
-                  </Avatar>
-                </ListItemAvatar>
-              )}
-              <ListItemText
-                primary={message.text}
-                sx={{
-                  whiteSpace: "pre-wrap",
-                  bgcolor: message.sender === "user" ? "1a1a1e" : "#121214",
-                  color: "white",
-                  borderRadius: 2,
-                  p: 2,
-                  display: "inline-block",
-                  maxWidth: "90%",
-                  fontSize: "10px",
-                  ml: message.sender === "user" ? 2 : 0,
-                  mr: message.sender === "bot" ? 2 : 0,
-                }}
-              />
-            </ListItem>
-          ))}
-
-          {isLoading && (
-            <ListItem
-              key={-1}
-              sx={{
-                textAlign: "left",
-                width: "100%",
-                justifyContent: "flex-start",
-                alignItems: "start",
-              }}
-            >
+      <List sx={{ overflowY: "scroll", mb: 6, height: "250px" }}>
+        {messages.map((message, index) => (
+          <ListItem key={index} sx={{ textAlign: message.sender === "user" ? "right" : "left", justifyContent: message.sender === "user" ? "flex-end" : "flex-start" }}>
+            {message.sender === "bot" && (
               <ListItemAvatar>
                 <Avatar sx={{ bgcolor: "primary.main" }}>
                   <CodeIcon />
                 </Avatar>
               </ListItemAvatar>
+            )}
+            <ListItemText primary={message.text} sx={{ color: "white", bgcolor: message.sender === "user" ? "#1a1a1e" : "#121214", borderRadius: 2, p: 2, maxWidth: "90%" }} />
+          </ListItem>
+        ))}
+        {isLoading && (
+          <ListItem>
+            <Loader />
+          </ListItem>
+        )}
+        <div ref={messagesEnd}></div>
+      </List>
 
-              <ListItemText>
-                <Loader />
-              </ListItemText>
-            </ListItem>
-          )}
-
-          <div style={{ float: "left", clear: "both" }} ref={messagesEnd}></div>
-        </List>
-
-        <Box
-          sx={{
-            display: "flex",
-            heigth: "50px",
-            width: "100%",
-            borderRadius: "15px",
-            color: "white",
-            zIndex: 999999,
+      <Box sx={{ display: "flex", alignItems: "center" }}>
+        <TextField
+          fullWidth
+          placeholder="Digite sua mensagem"
+          value={input}
+          disabled={isLoading}
+          onChange={handleInputChange}
+          onKeyDown={handleInputKeyPress}
+          InputProps={{
+            sx: { color: "white", backgroundColor: "#121214", borderRadius: "15px" }
           }}
-        >
-          {/* <Input
-            fullWidth
-            placeholder="Faça uma pergunta para a IA"
-            value={input}
-            disabled={isLoading}
-            onChange={handleInputChange}
-            onKeyDown={handleInputKeyPress}
-            sx={{
-              border: "solid 1px #121214",
-              borderRadius: "15px",
-              color: "white",
-              backgroundColor: "#121214",
-            }}
-          /> */}
-          <TextField
-            fullWidth
-            placeholder="Faça uma pergunta para a Lingu"
-            value={input}
-            disabled={isLoading}
-            onChange={handleInputChange}
-            onKeyDown={handleInputKeyPress}
-            InputProps={{
-              autoComplete: 'off',
-              sx: {
-                outline: 'none',
-                border: "solid 1px #121214",
-                borderRadius: "15px",
-                color: "white",
-                backgroundColor: "#121214",
-              },
-            }}
-          />
-          <IconButton
-            onClick={handleSendMessage}
-            loading={isLoading}
-            sx={{ width: "6%", marginLeft:'4px', color: "#8D8D99" }}
-          >
-            <SendIcon />
-          </IconButton>
-        </Box>
-      </Container>
-    </>
+        />
+        <IconButton onClick={handleSendMessage} disabled={isLoading} sx={{ marginLeft: 1 }}>
+          <SendIcon sx={{ color: "#8D8D99" }} />
+        </IconButton>
+      </Box>
+
+      <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
+        <button onClick={() => handleOptionClick('Opção 1')}>Opção 1</button>
+        <button onClick={() => handleOptionClick('Opção 2')}>Opção 2</button>
+        <button onClick={() => handleOptionClick('Opção 3')}>Opção 3</button>
+      </Box>
+    </Container>
   );
 };
 
