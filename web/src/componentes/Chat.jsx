@@ -3,6 +3,10 @@ import styled from "styled-components";
 import MessageList from "./MessageList";
 import Mensagem from "./imagens/send.png";
 import Navbar from "./Navbar";
+import IconButton from "@mui/material/IconButton";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const ChatContainer = styled.div`
   margin-top: 64px;
@@ -69,6 +73,10 @@ const MessageListContainer = styled.div`
   }
 `;
 
+const MessageHeader = styled.div`
+  width: 100%;
+`;
+
 const Chat = () => {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -76,17 +84,26 @@ const Chat = () => {
   const [sendMessageEnable, setSendMessageEnable] = useState(false);
   const [newMessage, setNewMessage] = useState("");
 
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   const handleSendMessage = () => {
     if (newMessage.trim()) {
       setMessages((messages) => [
         ...messages,
         {
-          id: messages.length + 1,
+          id: idMessage,
           sender: "User",
           content: newMessage,
         },
       ]);
+      idMessage++;
+      setSendMessageEnable(false);
       setNewMessage("");
+      handleFlowChat(5);
     }
   };
 
@@ -97,6 +114,7 @@ const Chat = () => {
     const delay = 3000;
     switch (control) {
       case 1:
+        setSendMessageEnable(false);
         setMessages([
           {
             id: idMessage,
@@ -161,18 +179,45 @@ const Chat = () => {
                         {
                           text: "Sim, pode continuar",
                           func: () => {
+                            setMessages((messagesList) => [
+                              ...messagesList,
+                              {
+                                id: idMessage,
+                                sender: "User",
+                                content: `Sim, pode continuar`,
+                              },
+                            ]);
+                            idMessage++;
                             handleFlowChat(2);
                           },
                         },
                         {
                           text: "Pode explicar novamente?",
                           func: () => {
+                            setMessages((messagesList) => [
+                              ...messagesList,
+                              {
+                                id: idMessage,
+                                sender: "User",
+                                content: `Pode explicar novamente?`,
+                              },
+                            ]);
+                            idMessage++;
                             handleFlowChat(3);
                           },
                         },
                         {
                           text: "Tenho uma dúvida...",
                           func: () => {
+                            setMessages((messagesList) => [
+                              ...messagesList,
+                              {
+                                id: idMessage,
+                                sender: "User",
+                                content: `Tenho uma dúvida...`,
+                              },
+                            ]);
+                            idMessage++;
                             handleFlowChat(4);
                           },
                         },
@@ -205,16 +250,6 @@ const Chat = () => {
 
         break;
       case 3:
-        setMessages((messagesList) => [
-          ...messagesList,
-          {
-            id: idMessage,
-            sender: "User",
-            content: `Pode explicar novamente?`,
-          },
-        ]);
-        idMessage++;
-
         setTimeout(function () {
           setMessages((messagesList) => [
             ...messagesList,
@@ -245,8 +280,216 @@ const Chat = () => {
                 },
               ]);
               idMessage++;
-              setLoading(false);
+              setTimeout(function () {
+                setMessages((messagesList) => [
+                  ...messagesList,
+                  {
+                    id: idMessage,
+                    sender: "Lingu",
+                    content: `Que interessante BOT, a história dos computadores é realmente fascinante.\n\nE você Robério, está conseguindo entender?`,
+                    options: [
+                      {
+                        text: "Sim, pode continuar",
+                        func: () => {
+                          handleFlowChat(2);
+                        },
+                      },
+                      {
+                        text: "Pode explicar novamente?",
+                        func: () => {
+                          handleFlowChat(3);
+                        },
+                      },
+                      {
+                        text: "Tenho uma dúvida...",
+                        func: () => {
+                          handleFlowChat(4);
+                        },
+                      },
+                    ],
+                  },
+                ]);
+
+                idMessage++;
+
+                setLoading(false);
+              }, delay);
             }, delay);
+          }, delay);
+        }, delay);
+        break;
+      case 4:
+        setTimeout(function () {
+          setMessages((messagesList) => [
+            ...messagesList,
+            {
+              id: idMessage,
+              sender: "Lingu",
+              content: `Sem problemas, pode perguntar ao BOT sua dúvida, que ele vai poder te responder`,
+            },
+          ]);
+
+          idMessage++;
+
+          setLoading(false);
+          setSendMessageEnable(true);
+        }, delay);
+        break;
+      case 5:
+        setTimeout(function () {
+          setMessages((messagesList) => [
+            ...messagesList,
+            {
+              id: idMessage,
+              sender: "Gemini",
+              content: `Os transistores são pequenos dispositivos eletrônicos usados para amplificar ou controlar a corrente elétrica. Eles foram uma das maiores inovações da eletrônica e revolucionaram os computadores.\n\nAntes dos transistores, os computadores usavam válvulas eletrônicas (ou válvulas a vácuo), que realizavam funções semelhantes, mas eram muito grandes, esquentavam bastante e consumiam muita energia. Isso tornava os primeiros computadores enormes e ineficientes.\n\nAqui está o que você precisa saber sobre os transistores:\n\n- Como funcionam: Um transistor tem três partes principais e pode funcionar como um "interruptor" ou um "amplificador" de corrente. Em termos simples, ele pode ligar e desligar sinais elétricos de forma muito rápida, o que é essencial para processar dados em um computador.\n\n- Impacto nos computadores: Quando os transistores foram inventados na década de 1950, eles permitiram que os computadores ficassem muito menores, mais rápidos e mais confiáveis. Isso aconteceu porque os transistores ocupam muito menos espaço e são mais eficientes que as válvulas.\n\n- O começo da miniaturização: Graças aos transistores, os engenheiros puderam colocar muitos mais deles em um espaço pequeno, o que abriu caminho para os circuitos integrados (microchips), usados em computadores modernos. Esses chips podem conter bilhões de transistores em uma peça minúscula de silício.\n\n- Resumindo, os transistores são como pequenos interruptores que controlam o fluxo de eletricidade em um circuito. Sem eles, os computadores nunca teriam ficado tão rápidos e compactos como são hoje. Eles são considerados uma das bases da era digital.`,
+            },
+          ]);
+
+          idMessage++;
+
+          setTimeout(function () {
+            setMessages((messagesList) => [
+              ...messagesList,
+              {
+                id: idMessage,
+                sender: "Lingu",
+                content: `Que legal BOT, não sabia disso.\n\nE você Robério? Conseguiu tirar a sua dúvida?`,
+                options: [
+                  {
+                    text: "Consegui sim, obrigado",
+                    func: () => {
+                      setMessages((messagesList) => [
+                        ...messagesList,
+                        {
+                          id: idMessage,
+                          sender: "User",
+                          content: `Consegui sim, obrigado`,
+                        },
+                      ]);
+
+                      idMessage++;
+                      handleFlowChat(6);
+                    },
+                  },
+                  {
+                    text: "Ainda não...",
+                    func: () => {
+                      setMessages((messagesList) => [
+                        ...messagesList,
+                        {
+                          id: idMessage,
+                          sender: "User",
+                          content: `Ainda não...`,
+                        },
+                      ]);
+
+                      idMessage++;
+                      handleFlowChat(4);
+                    },
+                  },
+                ],
+              },
+            ]);
+
+            idMessage++;
+
+            setLoading(false);
+          }, delay);
+        }, delay);
+        break;
+      case 6:
+        setTimeout(function () {
+          setMessages((messagesList) => [
+            ...messagesList,
+            {
+              id: idMessage,
+              sender: "Lingu",
+              content: `Show!\n\nAcredito que agora, você está pronto para uma pequena avaliação. Vamos começar?`,
+              options: [
+                {
+                  text: "Vamos!",
+                  func: () => {
+                    setMessages((messagesList) => [
+                      ...messagesList,
+                      {
+                        id: idMessage,
+                        sender: "User",
+                        content: `Vamos!`,
+                      },
+                    ]);
+
+                    idMessage++;
+                    handleFlowChat(7);
+                  },
+                },
+                {
+                  text: "Ainda não me sinto pronto, podemos revisar o conteúdo?",
+                  func: () => {
+                    setMessages((messagesList) => [
+                      ...messagesList,
+                      {
+                        id: idMessage,
+                        sender: "User",
+                        content: `Ainda não me sinto pronto, podemos revisar o conteúdo?`,
+                      },
+                    ]);
+
+                    idMessage++;
+                    handleFlowChat(3);
+                  },
+                },
+              ],
+            },
+          ]);
+
+          idMessage++;
+          setLoading(false);
+        }, delay);
+        break;
+
+      case 7:
+        setTimeout(function () {
+          setMessages((messagesList) => [
+            ...messagesList,
+            {
+              id: idMessage,
+              sender: "Lingu",
+              content: `Perfeito!\n\nVou deixar o BOT aplicar a avaliação.\n\nBom desempenho:`,
+            },
+          ]);
+
+          idMessage++;
+          setTimeout(function () {
+            setMessages((messagesList) => [
+              ...messagesList,
+              {
+                id: idMessage,
+                sender: "Gemini",
+                content: `1. Qual foi o impacto dos transistores no desenvolvimento dos computadores?`,
+                options: [
+                  {
+                    text: "a) Aumentaram o tamanho dos computadores.",
+                    func: () => {
+                      setMessages((messagesList) => [
+                        ...messagesList,
+                        {
+                          id: idMessage,
+                          sender: "User",
+                          content: `Item a)`,
+                        },
+                      ]);
+
+                      idMessage++;
+                      handleFlowChat(8);
+                    },
+                  },
+                ],
+              },
+            ]);
+
+            idMessage++;
+            setLoading(false);
           }, delay);
         }, delay);
         break;
@@ -269,11 +512,31 @@ const Chat = () => {
   return (
     <>
       <Navbar />
+
       <ChatContainer>
         <ChatContent>
+          <MessageHeader>
+            {" "}
+            <IconButton
+              aria-label="voltar"
+              sx={{
+                color: "#C4C4CC",
+                width: "10%",
+                justifyContent: "top",
+                alignItems: "top",
+              }}
+              onClick={() => handleBack()}
+            >
+              <ArrowBackIcon />
+              <Typography color="#C4C4CC" sx={{ fontSize: "0.9rem" }}>
+                VOLTAR
+              </Typography>
+            </IconButton>
+          </MessageHeader>
           <MessageListContainer>
             <MessageList messages={messages} loading={loading} />
           </MessageListContainer>
+
           {sendMessageEnable && (
             <InputContainer>
               <Input
@@ -287,7 +550,7 @@ const Chat = () => {
                 <ButtonIcon src={Mensagem} alt="Enviar" />
               </Button>
             </InputContainer>
-          )}{" "}
+          )}
         </ChatContent>
       </ChatContainer>
     </>

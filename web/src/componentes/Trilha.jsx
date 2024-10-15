@@ -35,7 +35,7 @@ const Trilha = () => {
     <>
       <Navbar />
 
-      <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+      <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column', marginTop: '64px' }}>
         {/* Parte superior */}
         <Box
           sx={{
