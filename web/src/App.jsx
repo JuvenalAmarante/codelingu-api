@@ -19,27 +19,23 @@ const router = createBrowserRouter([
     element: <HomePage />,
   },
   {
-    path: "chatbot",
-    element: <ChatBot />,
+    path: "conversa",
+    element: <Chat />,
   },
   {
-    path: "/trilha",
+    path: "trilha",
     element: <Trilha />,
-  },
-  {
-    path: "/Conteudo",
-    element: <Conteudo/>
   }
 ]);
 
 function App() {
   return (
-    //<div className="App">
-     // <RouterProvider router={router} />
-    //</div>
-    <div>
-    <Chat />
-   </div>
+    <div className="App">
+     <RouterProvider router={router} />
+    </div>
+  //   <div>
+  //   <Chat />
+  //  </div>
   );
 }
 

@@ -1,14 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
-import GeminiAvatar from './imagens/Gemini.png'; 
-import UserAvatar from './imagens/user.png'; 
-import LinguAvatar from './imagens/Lingu.jpeg'; 
+import GeminiAvatar from './imagens/Gemini.png';
+import UserAvatar from './imagens/user.png';
+import LinguAvatar from './imagens/Lingu.jpeg';
 
 const MessageContainer = styled.div`
-  display: flex;
+display: flex;
   justify-content: ${({ isUser }) => (isUser ? 'flex-end' : 'flex-start')};
   align-items: flex-start;
-  width: 100%; 
   margin-bottom: 10px;
 `;
 
@@ -17,12 +16,12 @@ const MessageBubble = styled.div`
     if (sender === 'User') return '321px';
     if (sender === 'Lingu') return '405px';
     if (sender === 'Gemini') return '922px';
-    return '60%'; 
+    return '60%';
   }};
   padding: 10px;
   margin: 0 10px;
   border-radius: 10px;
-  font-size: 16px;
+  font-size: 14px;
   color: #fff;
   background-color: ${({ sender }) => {
     if (sender === 'User') return '#dc9644';
@@ -32,20 +31,19 @@ const MessageBubble = styled.div`
   }};
   align-self: flex-start;
   text-align: left;
-  display: inline-block;
   word-wrap: break-word;
-  white-space: pre-wrap; 
+  white-space: pre-wrap;
   line-height: 1.5;
-  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 `;
 
 const Avatar = styled.div`
-  width: 50px;
-  height: 50px;
+  margin-bottom: -16px;
+  margin-left: -28px;
+  width: 25px;
+  height: 25px;
   border-radius: 50%;
   background-color: #ccc;
-  display: flex;
-  margin: ${({ isUser }) => (isUser ? '0 0 0 10px' : '0 10px 0 0')};
   background-image: ${({ sender }) => {
     if (sender === 'Gemini') return `url(${GeminiAvatar})`;
     if (sender === 'User') return `url(${UserAvatar})`;
@@ -60,11 +58,10 @@ const Message = ({ message }) => {
   const isUser = message.sender === 'User';
   return (
     <MessageContainer isUser={isUser}>
-      {!isUser && <Avatar sender={message.sender} />}
       <MessageBubble sender={message.sender}>
         {message.content}
+        <Avatar sender={message.sender} />
       </MessageBubble>
-      {isUser && <Avatar sender={message.sender} />}
     </MessageContainer>
   );
 };

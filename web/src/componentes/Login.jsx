@@ -19,11 +19,12 @@ const LoginPage = () => {
                     <h3 className="texto">Acesse sua conta</h3>
 
                     <div className="email">
-                        <p className="emailtexto">{"E-mail"}</p>
+                        <p className="emailtexto">E-mail</p>
                         <input
                             type="email"
                             name="email"
                             placeholder="Seu e-mail"
+                            autocomplete="off"
                         />
                     </div>
 
