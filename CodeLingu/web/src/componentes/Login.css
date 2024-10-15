@@ -1,0 +1,182 @@
+body {
+ 
+}
+
+
+
+.Codelingu{
+  align-self: start;
+  font-family: Plus Jakarta Sans;
+  font-size: 30px;
+  font-weight: 700;
+  margin-top: 10%;
+  line-height: 35.28px;
+  letter-spacing: 0.1em;
+  text-align: left;
+  color: #FFFFFF;
+
+}
+
+.texto{
+  align-self: start;
+  font-family: Plus Jakarta Sans;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 30.24px;
+  text-align: left;    
+  margin-bottom: 70px; 
+  margin-top: 20px;
+  color: #FFFFFF;
+}
+
+
+
+.Imagem {
+  float: left;
+  width: 70%;
+  height: 100%;
+  gap: 0px;
+  opacity: 0px;
+  position: fixed;
+}
+
+img{
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+}
+
+img {
+  margin: 0 auto;
+}  
+
+.Dados{
+  float: right;
+  width: 30%;
+  height: 100%;
+  left: 844px;
+  gap: 0px;
+  opacity: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.containerDados{
+  width: 80%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.email{
+  width: 100%;
+}
+
+.Senha{
+  width: 100%;
+}
+
+input{    
+  width: 100%;
+  height: 48px;
+  border-radius: 5px;
+  text-indent: 10px;
+  border: solid 1px #444340;
+  opacity: 0px;
+  background-color: #302e2b;
+  color: #FFFFFF;
+}
+
+.button {
+  margin-top: 30px;
+  border: 30px ;
+  background-color: #00A4E3;
+  color: #fff;
+  width: 100%;
+  height: 60%;
+  padding: 20px 0;
+  border-radius: 5px;
+  font-size: 15px;
+  text-align: center;
+}
+
+p{
+  height: 23px;
+  left: 80px;
+  gap: 0px;
+  opacity: 0px;
+  color: #fff
+}
+
+input:focus,
+button:focus {
+outline: none;
+border-color: #00A4E3;
+}
+
+
+button:hover {
+background-color: #333;
+}
+
+a {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+
+.emailtexto{
+  margin-top: 35px;
+  height: 5px;
+  font-size: 15px;
+  bottom: 25px;
+}
+
+
+
+.SemSenha {
+  color: #00A4E3;
+  width: 100%;
+  height: 23px;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+.senhatexto{
+  margin-top: 35px;
+  height: 5px;
+  font-size: 15px;
+  bottom: 25px;
+}
+
+.ContaNova{
+  margin-top: 25%;
+
+}
+
+.Inscrito{
+  color: aqua;
+
+}
+
+
+@media only screen and (max-width: 800px) {
+  .Dados {
+      width: 100%;
+  }
+
+  .SemSenha{
+      width: 100%;
+      left: 80px;
+  }
+
+  .Imagem{
+      display: none;
+  }
+
+  
+}

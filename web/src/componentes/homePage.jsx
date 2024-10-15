@@ -23,6 +23,7 @@ import {
 } from "@mui/material";
 import { useNavigate, Link } from "react-router-dom";
 import { FaStar } from "react-icons/fa";
+import { Computer, Keyboard, PlayLesson, Terminal } from "@mui/icons-material";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -66,7 +67,7 @@ const HomePage = () => {
             marginBottom: "16px"
           }}
         >
-          Suas Trilhas
+          Seus Cursos
         </Typography>
 
         <Link to="/trilha" style={{ textDecoration: "none", width: "100%" }}>
@@ -87,7 +88,7 @@ const HomePage = () => {
             <Box sx={{ display: "flex", flexDirection: "column", flex: "1" }}>
               <CardContent sx={{ flex: "1 0 auto" }}>
                 <Box sx={{ display: "flex", gap: 1, alignItems: "center" }}>
-                  <MenuBookIcon
+                  <PlayLesson
                     sx={{
                       height: 35,
                       width: 35,
@@ -112,7 +113,7 @@ const HomePage = () => {
               <Box sx={{ display: "flex", gap: 1, marginTop: 3 }}>
                 <Chip
                   icon={
-                    <MenuBookIcon
+                    <Computer
                       color="#00A4E3"
                       sx={{ color: "#00A4E3", height: "20px" }}
                     />
@@ -127,7 +128,7 @@ const HomePage = () => {
                 />
                 <Chip
                   icon={
-                    <MenuBookIcon
+                    <Keyboard
                       color="#00A4E3"
                       sx={{ color: "#00A4E3", height: "20px" }}
                     />
@@ -142,7 +143,7 @@ const HomePage = () => {
                 />
                 <Chip
                   icon={
-                    <MenuBookIcon
+                    <Terminal
                       color="#00A4E3"
                       sx={{ color: "#00A4E3", height: "20px" }}
                     />
