@@ -19,7 +19,7 @@ const LoginPage = () => {
                     <h3 className="texto">Acesse sua conta</h3>
 
                     <div className="email">
-                        <p className="emailtexto">E-mail</p>
+                        <p className="emailtexto">E-mail ou Usuario</p>
                         <input
                             type="email"
                             name="email"
@@ -51,7 +51,7 @@ const LoginPage = () => {
                             Não tem Conta?
                         </a>
                         <br></br>
-                        <a className="Inscrito" href="#">
+                        <a className="Inscrito" href="/SignUp">
                             Se inscreva gratuitamente
                         </a>
                     </div>

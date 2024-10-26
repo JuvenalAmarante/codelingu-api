@@ -7,6 +7,7 @@ import ChatBot from "./componentes/ChatBot";
 import Trilha from "./componentes/Trilha";
 import Conteudo from "./componentes/Conteudo";
 import Chat from './componentes/Chat';
+import SignUp from './componentes/SignUp';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
   {
     path: "conversa",
     element: <Chat />,
+  },
+  {
+    path: "SignUp",
+    element: <SignUp />,
   },
   {
     path: "trilha",
