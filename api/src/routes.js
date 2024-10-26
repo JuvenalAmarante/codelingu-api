@@ -1,10 +1,9 @@
-const { Router } = require("express");
-const MessageController = require("./app/controllers/MessageController");
+const { Router } = require('express');
+const MessageController = require('./app/controllers/MessageController');
+const UserController = require('./app/controllers/UserController');
 
 const router = Router();
 
-router.get("/message", MessageController.index);
-router.get("/message/:id", MessageController.show);
-router.post("/message/", MessageController.sendBotMessage);
+router.post('/login', UserController.login);
 
 module.exports = router;

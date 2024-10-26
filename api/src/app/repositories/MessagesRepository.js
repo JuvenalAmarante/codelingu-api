@@ -1,6 +1,6 @@
 const { v4 } = require('uuid');
 
-let messages = [
+const messages = [
   {
     id: v4(),
     user: 'Irineu Campos',
@@ -19,7 +19,9 @@ class MessagesRepository {
   }
 
   findById(id) {
-    return new Promise((resolve) => resolve(messages.find((contact) => contact.id === id)));
+    return new Promise((resolve) =>
+      resolve(messages.find((contact) => contact.id === id)),
+    );
   }
 }
 

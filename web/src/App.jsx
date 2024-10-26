@@ -1,11 +1,8 @@
 
-import React from "react";
 import "./App.css";
 import LoginPage from "./componentes/Login";
 import HomePage from "./componentes/homePage";
-import ChatBot from "./componentes/ChatBot";
 import Trilha from "./componentes/Trilha";
-import Conteudo from "./componentes/Conteudo";
 import Chat from './componentes/Chat';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -33,9 +30,6 @@ function App() {
     <div className="App">
      <RouterProvider router={router} />
     </div>
-  //   <div>
-  //   <Chat />
-  //  </div>
   );
 }
 

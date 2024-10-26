@@ -1,5 +1,5 @@
-const MessagesRepository = require("../repositories/MessagesRepository");
-const GeminiService = require("../services/GeminiService");
+const MessagesRepository = require('../repositories/MessagesRepository');
+const GeminiService = require('../services/GeminiService');
 
 class MessageController {
   async index(request, response) {
@@ -17,7 +17,7 @@ class MessageController {
 
     if (!contact) {
       // 404: Not Found
-      return response.status(404).send({ error: "Message not found" });
+      return response.status(404).send({ error: 'Message not found' });
     }
 
     response.send(contact);
