@@ -19,7 +19,7 @@ const LoginPage = () => {
                     <h3 className="texto">Acesse sua conta</h3>
 
                     <div className="email">
-                        <p className="emailtexto">E-mail ou Usuario</p>
+                        <p className="emailtexto">E-mail</p>
                         <input
                             type="email"
                             name="email"
